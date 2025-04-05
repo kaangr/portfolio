@@ -1,12 +1,13 @@
 {
   "version": 2,
+  "name": "portfolio-kaangr",
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
   "regions": ["iad1"],
   "env": {
-    "NEXTAUTH_URL": "https://portfolio_kaangr.vercel.app",
+    "NEXTAUTH_URL": "https://portfolio-kaangr.vercel.app",
     "NEXTAUTH_SECRET": "2gyZ3GDw3LHZQKDhPmPDL3sjREVRXPr8"
   }
 } 
