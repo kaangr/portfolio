@@ -6,7 +6,7 @@
   "framework": "nextjs",
   "regions": ["iad1"],
   "env": {
-    "NEXTAUTH_URL": "https://your-domain.vercel.app",
-    "NEXTAUTH_SECRET": "@nextauth-secret"
+    "NEXTAUTH_URL": "https://portfolio_kaangr.vercel.app",
+    "NEXTAUTH_SECRET": "2gyZ3GDw3LHZQKDhPmPDL3sjREVRXPr8"
   }
 } 
