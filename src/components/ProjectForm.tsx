@@ -117,6 +117,7 @@ export function ProjectForm({ initialData, onSubmit }: ProjectFormProps) {
           type="text"
           id="technologies"
           {...register('technologies')}
+          placeholder="React, TypeScript, Next.js"
           className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         {errors.technologies && (

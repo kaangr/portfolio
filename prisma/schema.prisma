@@ -14,7 +14,7 @@ model Project {
   imageUrl    String
   githubUrl   String?
   liveUrl     String?
-  technologies String[]
+  technologies String   // Store as comma-separated values
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
