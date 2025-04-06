@@ -31,12 +31,12 @@ export default async function AdminDashboard() {
                 <h2 className="text-xl font-bold mb-2">{project.title}</h2>
                 <p className="text-gray-300 mb-4">{project.description}</p>
                 <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech) => (
+                  {project.technologies.split(',').map((tech) => (
                     <span
-                      key={tech}
+                      key={tech.trim()}
                       className="px-2 py-1 bg-white/10 rounded-full text-sm"
                     >
-                      {tech}
+                      {tech.trim()}
                     </span>
                   ))}
                 </div>
