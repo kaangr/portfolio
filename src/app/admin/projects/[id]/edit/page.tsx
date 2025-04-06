@@ -11,7 +11,7 @@ interface Project {
   imageUrl: string;
   githubUrl: string | null;
   liveUrl: string | null;
-  technologies: string[];
+  technologies: string;
 }
 
 export default function EditProjectPage({
@@ -49,10 +49,7 @@ export default function EditProjectPage({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...data,
-          technologies: data.technologies.split(',').map((tech: string) => tech.trim()),
-        }),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
@@ -80,8 +77,12 @@ export default function EditProjectPage({
       <h1 className="text-2xl font-bold mb-8">Edit Project</h1>
       <ProjectForm
         initialData={{
-          ...project,
-          technologies: project.technologies.join(', '),
+          title: project.title,
+          description: project.description,
+          imageUrl: project.imageUrl,
+          technologies: project.technologies,
+          githubUrl: project.githubUrl || '',
+          liveUrl: project.liveUrl || '',
         }}
         onSubmit={handleSubmit}
       />
