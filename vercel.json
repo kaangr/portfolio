@@ -6,9 +6,6 @@
   "installCommand": "npm ci",
   "framework": "nextjs",
   "regions": ["iad1"],
-  "build": {
-    "env": { "NODE_ENV": "development" }
-  },
   "env": {
     "NEXTAUTH_URL": "https://portfolio-kaangr.vercel.app",
     "NEXTAUTH_SECRET": "2gyZ3GDw3LHZQKDhPmPDL3sjREVRXPr8"
