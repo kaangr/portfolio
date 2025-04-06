@@ -3,7 +3,7 @@
   "name": "portfolio-kaangr",
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
-  "installCommand": "npm install --force",
+  "installCommand": "npm ci",
   "framework": "nextjs",
   "regions": ["iad1"],
   "env": {
