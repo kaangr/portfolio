@@ -1,3 +1,5 @@
+'use client';
+
 import { Background3D } from '@/components/Background3D';
 import Image from 'next/image';
 import Link from 'next/link';
