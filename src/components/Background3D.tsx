@@ -1,23 +1,39 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { PointMaterial, Points, Preload } from '@react-three/drei';
-import * as random from 'maath/random/dist/maath-random.esm';
-import { Vector3 } from 'three';
+import { Points, PointMaterial, Preload } from '@react-three/drei';
+import * as THREE from 'three';
 
 const StarField = (props: any) => {
   const ref = useRef<any>();
-  const sphere = useMemo(() => random.inSphere(new Float32Array(5000), { radius: 1.5 }), []);
+  
+  // Create stars manually instead of using maath
+  const particleCount = 5000;
+  const positions = new Float32Array(particleCount * 3);
+  
+  for (let i = 0; i < particleCount; i++) {
+    const i3 = i * 3;
+    // Create random positions in a sphere
+    const radius = 1.5 * Math.random();
+    const theta = 2 * Math.PI * Math.random();
+    const phi = Math.acos(2 * Math.random() - 1);
+    
+    positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+    positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+    positions[i3 + 2] = radius * Math.cos(phi);
+  }
 
   useFrame((state, delta) => {
-    ref.current.rotation.x -= delta / 10;
-    ref.current.rotation.y -= delta / 15;
+    if (ref.current) {
+      ref.current.rotation.x -= delta / 10;
+      ref.current.rotation.y -= delta / 15;
+    }
   });
 
   return (
     <group rotation={[0, 0, Math.PI / 4]}>
-      <Points ref={ref} positions={sphere} stride={3} frustumCulled {...props}>
+      <Points ref={ref} positions={positions} stride={3} frustumCulled {...props}>
         <PointMaterial
           transparent
           color="#3b82f6"
