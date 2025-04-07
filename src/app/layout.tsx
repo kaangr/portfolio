@@ -3,14 +3,13 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-sans",
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "Kaan Gursoy | Portfolio",
-  description: "Personal portfolio of Kaan Gursoy, a computer engineering student and developer",
+  title: "Kaan Gursoy - Portfolio",
+  description: "Personal portfolio website showcasing my projects and skills",
 };
 
 export default function RootLayout({
@@ -19,10 +18,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable}`}>
-      <body>
-        <main>{children}</main>
+    <html lang="en">
+      <body className={`${inter.className} min-h-screen bg-background antialiased`}>
+        {children}
       </body>
     </html>
   );
-}
+} 
