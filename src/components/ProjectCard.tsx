@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
+import { Github, ExternalLink } from 'lucide-react';
 
 interface ProjectCardProps {
   title: string;
@@ -25,93 +26,48 @@ export function ProjectCard({
   className,
 }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const rotateX = (y - centerY) / 20;
-      const rotateY = (centerX - x) / 20;
-      
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
-      // Update gradient position
-      const gradientX = (x / rect.width) * 100;
-      const gradientY = (y / rect.height) * 100;
-      card.style.setProperty('--x', `${gradientX}%`);
-      card.style.setProperty('--y', `${gradientY}%`);
-    };
-
-    const handleMouseLeave = () => {
-      card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-    };
-
-    card.addEventListener('mousemove', handleMouseMove);
-    card.addEventListener('mouseleave', handleMouseLeave);
-
-    return () => {
-      card.removeEventListener('mousemove', handleMouseMove);
-      card.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
 
   return (
     <div
-      ref={cardRef}
       className={cn(
-        "group relative overflow-hidden rounded-xl transition-all duration-300",
-        "gradient-border glass-effect",
-        "before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_var(--x,50%)_var(--y,50%),rgba(255,255,255,0.1)_0%,transparent_50%)]",
-        "hover:neon-border",
+        "group relative overflow-hidden rounded-xl bg-card border border-primary/10",
+        "transition-all duration-300 hover:shadow-xl hover:shadow-primary/5",
+        "hover:border-primary/20 hover:-translate-y-1",
         className
       )}
-      style={{ '--x': '50%', '--y': '50%' } as React.CSSProperties}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative h-48 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-10" />
+      <div className="relative h-56 w-full overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <Image
           src={imageUrl}
           alt={title}
           fill
           className={cn(
-            "object-cover transition-all duration-500",
-            isHovered ? "scale-110 blur-[2px]" : "scale-100"
+            "object-cover transition-all duration-700",
+            isHovered ? "scale-110" : "scale-100"
           )}
         />
-        <div className={cn(
-          "absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20 opacity-0 transition-opacity duration-500 z-20",
-          isHovered && "opacity-100"
-        )} />
       </div>
       
-      <div className="p-6 relative z-30">
+      <div className="p-6">
         <h3 className={cn(
-          "text-xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent transition-all duration-300",
-          isHovered && "text-glow"
+          "text-2xl font-bold mb-3 text-primary transition-colors",
+          isHovered && "text-primary/90"
         )}>
           {title}
         </h3>
-        <p className="text-muted-foreground mb-4 text-sm line-clamp-3">{description}</p>
+        <p className="text-muted-foreground mb-6 text-sm leading-relaxed">{description}</p>
         
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-2 mb-6">
           {technologies.map((tech) => (
             <span 
               key={tech} 
               className={cn(
-                "inline-flex px-2 py-1 text-xs rounded-full transition-all duration-300",
-                "bg-accent/30 text-primary/90 border border-primary/20",
-                "hover:bg-accent/50 hover:border-primary/40"
+                "inline-flex px-3 py-1 text-xs font-medium rounded-full transition-all duration-300",
+                "bg-primary/5 text-primary border border-primary/10",
+                "hover:bg-primary/10 hover:border-primary/20 hover:scale-105"
               )}
             >
               {tech}
@@ -119,18 +75,16 @@ export function ProjectCard({
           ))}
         </div>
         
-        <div className="flex gap-2 mt-auto">
+        <div className="flex gap-3">
           {githubUrl && (
             <Button 
               size="sm" 
               variant="outline" 
               asChild 
-              className={cn(
-                "border-primary/20 hover:bg-accent",
-                "transition-all duration-300"
-              )}
+              className="border-primary/20 hover:bg-primary/10 transition-all duration-300"
             >
-              <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+              <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                <Github className="w-4 h-4" />
                 GitHub
               </a>
             </Button>
@@ -139,13 +93,10 @@ export function ProjectCard({
             <Button 
               size="sm" 
               asChild 
-              className={cn(
-                "bg-primary/10 hover:bg-primary/20 text-primary",
-                "backdrop-blur-sm transition-all duration-300",
-                "hover:neon-border"
-              )}
+              className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300"
             >
-              <a href={liveUrl} target="_blank" rel="noopener noreferrer">
+              <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                <ExternalLink className="w-4 h-4" />
                 Live Demo
               </a>
             </Button>
